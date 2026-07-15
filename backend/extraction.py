@@ -14,9 +14,32 @@ from pydantic import BaseModel, ValidationError
 from schemas import SchemaField, tool_schema
 
 
-SYSTEM_PROMPT = """You extract source documents into the supplied JSON schema. Use only facts stated in the document.
-When a value is absent, ambiguous, or cannot be confidently determined, return null. Do not invent values.
-Return only the structured response requested by the schema. Keep original wording where practical."""
+SYSTEM_PROMPT = """You extract information from arbitrary raw text into the supplied JSON schema.
+The input may be conversational, badly formatted, incomplete, noisy, or contain no labels at all.
+Read the meaning of the full text rather than expecting a template, headings, or line breaks.
+Use only facts stated in the text. When a value is absent, ambiguous, or cannot be confidently determined, return null.
+Do not invent values. Return only the structured response requested by the schema and keep original wording where practical."""
+
+
+def _parse_json_object(output: str) -> dict[str, Any]:
+    """Accept JSON returned directly, in a markdown fence, or with brief surrounding prose."""
+    cleaned = output.strip()
+    if cleaned.startswith("```"):
+        cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned
+        cleaned = cleaned.rsplit("```", 1)[0].strip()
+    try:
+        parsed = json.loads(cleaned)
+    except json.JSONDecodeError:
+        start, end = cleaned.find("{"), cleaned.rfind("}")
+        if start < 0 or end <= start:
+            raise RuntimeError("Gemini returned malformed structured output.")
+        try:
+            parsed = json.loads(cleaned[start:end + 1])
+        except json.JSONDecodeError as error:
+            raise RuntimeError("Gemini returned malformed structured output.") from error
+    if not isinstance(parsed, dict):
+        raise RuntimeError("Gemini returned a non-object structured response.")
+    return parsed
 
 
 def _call_gemini(text: str, model: type[BaseModel]) -> dict[str, Any]:
@@ -35,13 +58,7 @@ def _call_gemini(text: str, model: type[BaseModel]) -> dict[str, Any]:
     )
     if not interaction.output_text:
         raise RuntimeError("Gemini did not return structured extraction output.")
-    try:
-        parsed = json.loads(interaction.output_text)
-    except json.JSONDecodeError as error:
-        raise RuntimeError("Gemini returned malformed structured output.") from error
-    if not isinstance(parsed, dict):
-        raise RuntimeError("Gemini returned a non-object structured response.")
-    return parsed
+    return _parse_json_object(interaction.output_text)
 
 
 def normalize_model_response(raw: dict[str, Any], model: type[BaseModel], specs: list[SchemaField]) -> tuple[dict[str, Any], dict[str, str]]:

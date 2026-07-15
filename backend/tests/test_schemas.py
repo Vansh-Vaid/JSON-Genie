@@ -66,6 +66,11 @@ def test_gemini_request_uses_structured_json_schema(monkeypatch):
     assert captured["response_format"]["schema"] == model.model_json_schema()
 
 
+def test_provider_json_parser_accepts_fenced_or_surrounded_json():
+    assert extraction._parse_json_object('```json\n{"title": "Analyst"}\n```') == {"title": "Analyst"}
+    assert extraction._parse_json_object('Here is the result:\n{"title": "Analyst"}') == {"title": "Analyst"}
+
+
 def test_provider_error_messages_are_actionable():
     assert "GEMINI_API_KEY" in extraction_error_message(RuntimeError("GEMINI_API_KEY is not configured."))
     assert "free-tier" in extraction_error_message(RuntimeError("429 RESOURCE_EXHAUSTED"))
