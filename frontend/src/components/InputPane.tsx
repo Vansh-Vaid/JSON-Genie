@@ -37,14 +37,14 @@ export function InputPane({
         <span className="pane-index">01</span>
         <div>
           <h1>Source document</h1>
-          <p>Bring in the text you want to turn into dependable data.</p>
+        <p>Paste any text and turn the useful details into dependable data.</p>
         </div>
         <span className="pane-state">INPUT</span>
       </div>
 
       <div className="input-tip">
         <span className="tip-icon" aria-hidden="true">✦</span>
-        <p>New here? <button type="button" onClick={onLoadSample}>Load a sample invoice</button> to see the full flow.</p>
+        <p>No special format needed. <button type="button" onClick={onLoadSample}>Try a natural-text invoice</button> to see the full flow.</p>
       </div>
 
       <div className="control-group">

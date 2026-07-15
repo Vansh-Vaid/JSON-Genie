@@ -11,16 +11,7 @@ const schemaLabels: Record<SchemaName, string> = {
 }
 const phases = ['Reading input', 'Matching schema', 'Validating fields']
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
-const invoiceSample = `Invoice #INV-2048
-Northstar Office Supplies
-
-Invoice date: August 1, 2026
-Due date: August 31, 2026
-
-Ergonomic chairs — $1,249.00
-Delivery — $100.50
-
-Total due: $1,349.50`
+const invoiceSample = `Hi Maya — Northstar Office Supplies sent invoice INV-2048 for the ergonomic chairs and delivery. The total comes to $1,349.50, and they need payment by August 31, 2026. Please add it to this month's expenses.`
 
 function errorDetail(payload: unknown) {
   if (payload && typeof payload === 'object' && 'detail' in payload) {
