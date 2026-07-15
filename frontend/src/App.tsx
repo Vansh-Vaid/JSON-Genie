@@ -30,10 +30,12 @@ export default function App() {
   const [history, setHistory] = useState<HistoryEntry[]>([])
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isResolving, setIsResolving] = useState(false)
+  const [resolveCycle, setResolveCycle] = useState(0)
   const [phaseIndex, setPhaseIndex] = useState(0)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const stored = window.localStorage.getItem('json-genie-theme')
-    return stored === 'dark' ? 'dark' : 'light'
+    return stored === 'light' ? 'light' : 'dark'
   })
   const phase = useMemo(() => phases[phaseIndex], [phaseIndex])
 
@@ -47,6 +49,12 @@ export default function App() {
     const timer = window.setInterval(() => setPhaseIndex(current => Math.min(current + 1, phases.length - 1)), 700)
     return () => window.clearInterval(timer)
   }, [isLoading])
+
+  useEffect(() => {
+    if (!isResolving) return
+    const timer = window.setTimeout(() => setIsResolving(false), 720)
+    return () => window.clearTimeout(timer)
+  }, [isResolving, resolveCycle])
 
   const loadSample = () => {
     setText(invoiceSample)
@@ -82,6 +90,8 @@ export default function App() {
 
       const extraction = payload as ExtractionResult
       setResult(extraction)
+      setResolveCycle(current => current + 1)
+      setIsResolving(true)
       setHistory(current => [
         {
           id: crypto.randomUUID(),
@@ -111,14 +121,16 @@ export default function App() {
   return (
     <main className="app-shell">
       <header className="topbar">
-        <a className="brand-lockup" href="/" aria-label="JSON Genie home">
-          <span className="brand-mark"><Icon name="sparkles" size={15} /></span>
-          <span className="wordmark">JSON Genie</span>
-          <span className="topbar-divider" />
-          <span className="schema-readout">Workspace</span>
-        </a>
-        <div className="topbar-actions">
+        <div className="brand-cluster">
+          <a className="brand-lockup" href="/" aria-label="JSON Genie home">
+            <span className="brand-mark"><Icon name="code" size={15} /></span>
+            <span className="wordmark">JSON Genie</span>
+            <span className="topbar-divider" />
+            <span className="schema-readout">Precision workspace</span>
+          </a>
           <span className="connection-status"><i aria-hidden="true" />Ready</span>
+        </div>
+        <div className="topbar-actions">
           <a className="nav-icon-button" href="https://github.com/Vansh-Vaid/JSON-Genie" target="_blank" rel="noreferrer" aria-label="Open JSON Genie on GitHub" title="GitHub"><Icon name="github" size={16} /></a>
           <button className="nav-icon-button" type="button" aria-label="Settings" title="Settings coming soon" disabled><Icon name="settings" size={16} /></button>
           <button className="theme-toggle" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} onClick={() => setTheme(current => current === 'light' ? 'dark' : 'light')}>
@@ -135,6 +147,9 @@ export default function App() {
           customFields={customFields}
           onCustomFieldsChange={setCustomFields}
           isLoading={isLoading}
+          isResolving={isResolving}
+          resolveCycle={resolveCycle}
+          resolvedFields={result?.fields ?? []}
           onExtract={extract}
           onLoadSample={loadSample}
         />
@@ -144,10 +159,13 @@ export default function App() {
           phase={phase}
           error={error}
           history={history}
+          schemaName={schemaName}
+          customFields={customFields}
+          isResolving={isResolving}
           onSelectHistory={selectHistory}
         />
       </section>
-      <footer className="app-footer"><span><Icon name="sparkles" size={13} /> JSON Genie</span><span>Private, schema-first extraction in your browser session.</span><a href="https://github.com/Vansh-Vaid/JSON-Genie" target="_blank" rel="noreferrer">View source <Icon name="arrow-up-right" size={13} /></a></footer>
+      <footer className="app-footer"><span><Icon name="code" size={13} /> JSON Genie</span><span>Private, schema-first extraction in your browser session.</span><a href="https://github.com/Vansh-Vaid/JSON-Genie" target="_blank" rel="noreferrer">View source <Icon name="arrow-up-right" size={13} /></a></footer>
     </main>
   )
 }
