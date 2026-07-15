@@ -1,5 +1,6 @@
 import type { CustomField, SchemaName } from '../types'
 import { SchemaBuilder } from './SchemaBuilder'
+import { Icon } from './Icon'
 
 const options: { value: SchemaName; label: string }[] = [
   { value: 'invoice', label: 'Invoice' },
@@ -39,11 +40,11 @@ export function InputPane({
           <h1>Source document</h1>
         <p>Paste any text and turn the useful details into dependable data.</p>
         </div>
-        <span className="pane-state">INPUT</span>
+        <span className="pane-state"><Icon name="file" size={12} /> INPUT</span>
       </div>
 
       <div className="input-tip">
-        <span className="tip-icon" aria-hidden="true">✦</span>
+        <span className="tip-icon"><Icon name="sparkles" size={15} /></span>
         <p>No special format needed. <button type="button" onClick={onLoadSample}>Try a natural-text invoice</button> to see the full flow.</p>
       </div>
 
@@ -62,7 +63,7 @@ export function InputPane({
       <div className="source-section">
         <div className="control-label-row">
           <label htmlFor="source-text" className="section-label">Raw text</label>
-          <span className="control-note">Paste or type</span>
+          <span className="control-note">Any format</span>
         </div>
         <textarea
           id="source-text"
@@ -80,7 +81,7 @@ export function InputPane({
         </div>
         <button className="extract-button" type="button" onClick={onExtract} disabled={isLoading || !text.trim()}>
           <span>{isLoading ? 'Inspecting…' : 'Extract fields'}</span>
-          <span aria-hidden="true">→</span>
+          <Icon name="arrow-up-right" size={16} />
         </button>
       </div>
     </section>

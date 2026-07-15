@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { InputPane } from './components/InputPane'
 import { ResultPane } from './components/ResultPane'
+import { Icon } from './components/Icon'
 import type { CustomField, ExtractionResult, HistoryEntry, SchemaName } from './types'
 
 const schemaLabels: Record<SchemaName, string> = {
@@ -30,7 +31,16 @@ export default function App() {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [phaseIndex, setPhaseIndex] = useState(0)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const stored = window.localStorage.getItem('json-genie-theme')
+    return stored === 'dark' ? 'dark' : 'light'
+  })
   const phase = useMemo(() => phases[phaseIndex], [phaseIndex])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    window.localStorage.setItem('json-genie-theme', theme)
+  }, [theme])
 
   useEffect(() => {
     if (!isLoading) return
@@ -101,14 +111,19 @@ export default function App() {
   return (
     <main className="app-shell">
       <header className="topbar">
-        <div className="brand-lockup">
-          <span className="wordmark">JSON GENIE</span>
+        <a className="brand-lockup" href="/" aria-label="JSON Genie home">
+          <span className="brand-mark"><Icon name="sparkles" size={15} /></span>
+          <span className="wordmark">JSON Genie</span>
           <span className="topbar-divider" />
-          <span className="schema-readout">{schemaLabels[schemaName]}</span>
-        </div>
-        <div className="topbar-meta">
-          <span className="connection-status"><i aria-hidden="true" />Schema-ready</span>
-          <span className="app-mode">Structured extraction</span>
+          <span className="schema-readout">Workspace</span>
+        </a>
+        <div className="topbar-actions">
+          <span className="connection-status"><i aria-hidden="true" />Ready</span>
+          <a className="nav-icon-button" href="https://github.com/Vansh-Vaid/JSON-Genie" target="_blank" rel="noreferrer" aria-label="Open JSON Genie on GitHub" title="GitHub"><Icon name="github" size={16} /></a>
+          <button className="nav-icon-button" type="button" aria-label="Settings" title="Settings coming soon" disabled><Icon name="settings" size={16} /></button>
+          <button className="theme-toggle" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} onClick={() => setTheme(current => current === 'light' ? 'dark' : 'light')}>
+            <Icon name={theme === 'light' ? 'moon' : 'sun'} size={16} />
+          </button>
         </div>
       </header>
       <section className="workbench" aria-label="JSON Genie workspace">
@@ -132,6 +147,7 @@ export default function App() {
           onSelectHistory={selectHistory}
         />
       </section>
+      <footer className="app-footer"><span><Icon name="sparkles" size={13} /> JSON Genie</span><span>Private, schema-first extraction in your browser session.</span><a href="https://github.com/Vansh-Vaid/JSON-Genie" target="_blank" rel="noreferrer">View source <Icon name="arrow-up-right" size={13} /></a></footer>
     </main>
   )
 }
