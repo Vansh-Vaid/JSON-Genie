@@ -1,50 +1,31 @@
 # JSON Genie
 
-JSON Genie converts unstructured documents into validated, inspectable JSON. The service validates every extraction against a selected schema before returning it to the interface.
+JSON Genie turns messy documents into clear, inspectable JSON. Paste an invoice, job posting, email, or any other source text, choose the fields you care about, and receive a structured result that is easy to review, copy, and reuse.
 
-## Run locally
+## What it does
 
-Prerequisites: Python 3.10+, Node 20+, and a Gemini API key. Create a free-tier key in [Google AI Studio](https://aistudio.google.com/app/apikey).
+- Extracts fields from unstructured text using reusable schemas.
+- Includes ready-to-use schemas for invoices, job postings, and emails.
+- Lets you define custom fields with string, number, boolean, date, and list types.
+- Shows every field with a clear validation status: validated, missing, or mismatch.
+- Keeps the original source unchanged while presenting the extracted result beside it.
+- Supports raw JSON view, one-click copying, JSON download, and a short session history.
 
-1. In one terminal, start the API:
+## Validation-first workflow
 
-   ```powershell
-   cd backend
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   pip install -r requirements.txt
-   $env:GEMINI_API_KEY="your-gemini-key"
-   # Optional: use the free-tier Flash default explicitly
-   $env:GEMINI_MODEL="gemini-3.5-flash"
-   uvicorn main:app --reload
-   ```
+Each result is checked against its selected schema before it reaches the interface. Values that are not present are returned as `null` and marked as missing. Values that do not match their declared type are also returned as `null`, with a mismatch status so they can be reviewed instead of silently accepted.
 
-2. In a second terminal, start the app:
+This makes JSON Genie useful for quick document triage, structured review, and lightweight data preparation where the result should remain transparent and easy to inspect.
 
-   ```powershell
-   cd frontend
-   npm install
-   npm run dev
-   ```
+## Project structure
 
-Open `http://localhost:5173`. Set `VITE_API_URL` if the API is not at `http://localhost:8000`.
+The project is split into two focused parts:
 
-## Verification
+- `frontend/` contains the browser workspace and result viewer.
+- `backend/` contains the extraction service, schema definitions, validation, and tests.
 
-The backend tests cover realistic invoice, job-posting, and email payloads, custom runtime schema compilation, sparse values, and type mismatches:
+The browser keeps session history locally and does not persist source documents as part of the application.
 
-```powershell
-cd backend
-pytest
-```
+## Built with
 
-## Deployment
-
-Deploy `backend/` to Render with `uvicorn main:app --host 0.0.0.0 --port $PORT` and add `GEMINI_API_KEY` plus `ALLOWED_ORIGINS=https://your-vercel-app.vercel.app` as secrets. Deploy `frontend/` to Vercel, set `VITE_API_URL` to the Render URL, and redeploy.
-
-## Validation behavior
-
-- The extraction service requests values using the selected JSON schema.
-- Responses are parsed and validated server-side in strict mode.
-- Missing values are explicitly `null`; invalid value types are converted to `null` and returned with a `MISMATCH` stamp.
-- Session history lives only in browser memory and is capped at five results.
+React and TypeScript power the workspace, while FastAPI and Pydantic provide the service and validation layer. The extraction provider is used only to propose schema-shaped values; the backend remains responsible for parsing and validating the returned data.
