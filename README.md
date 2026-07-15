@@ -1,31 +1,34 @@
 # JSON Genie
 
-JSON Genie turns messy documents into clear, inspectable JSON. Paste an invoice, job posting, email, or any other source text, choose the fields you care about, and receive a structured result that is easy to review, copy, and reuse.
+JSON Genie turns everyday text into dependable, inspectable JSON. Paste a paragraph, email, invoice, job description, or any other source text, choose a schema, and get the details that matter in a clear, reviewable format.
 
-## What it does
+## A focused extraction workspace
 
-- Extracts fields from unstructured text using reusable schemas.
-- Includes ready-to-use schemas for invoices, job postings, and emails.
-- Lets you define custom fields with string, number, boolean, date, and list types.
-- Shows every field with a clear validation status: validated, missing, or mismatch.
-- Keeps the original source unchanged while presenting the extracted result beside it.
-- Supports raw JSON view, one-click copying, JSON download, and a short session history.
+JSON Genie is designed around a simple split view: source text stays visible on one side while the resolved fields appear beside it. The interface is intentionally calm and information-dense, so the result can be checked at a glance instead of treated as a black box.
 
-## Validation-first workflow
+- Works with natural, messy, and unstructured text—no fixed document template required.
+- Includes invoice, job posting, and email schemas for common workflows.
+- Supports custom fields with string, number, boolean, date, and list types.
+- Presents validated, missing, and mismatched values with clear status markers.
+- Switches between a field view and the underlying raw JSON.
+- Copies results, downloads JSON, and keeps a short local session history.
+- Includes responsive layouts, keyboard-friendly controls, and an intentional dark mode.
 
-Each result is checked against its selected schema before it reaches the interface. Values that are not present are returned as `null` and marked as missing. Values that do not match their declared type are also returned as `null`, with a mismatch status so they can be reviewed instead of silently accepted.
+## Transparent by design
 
-This makes JSON Genie useful for quick document triage, structured review, and lightweight data preparation where the result should remain transparent and easy to inspect.
+Every extracted value is checked against the selected schema before it reaches the result panel. Missing information is returned as `null` and marked as missing. Values that do not match their declared type are also returned as `null` and marked as mismatches, making uncertainty visible rather than silently hiding it.
+
+The original source remains unchanged, and session history stays in the browser. JSON Genie is suited to document triage, structured review, and lightweight data preparation where people need to understand the result as well as use it.
+
+## Product details
+
+The UI uses a small, consistent design system with neutral surfaces, a single blue accent, accessible focus states, responsive cards, and restrained motion. A compact navigation bar provides theme switching, GitHub access, and workspace status without distracting from the extraction task.
 
 ## Project structure
 
-The project is split into two focused parts:
-
-- `frontend/` contains the browser workspace and result viewer.
-- `backend/` contains the extraction service, schema definitions, validation, and tests.
-
-The browser keeps session history locally and does not persist source documents as part of the application.
+- `frontend/` contains the React workspace, design system, responsive components, and result viewer.
+- `backend/` contains the FastAPI extraction service, schema compiler, validation layer, and tests.
 
 ## Built with
 
-React and TypeScript power the workspace, while FastAPI and Pydantic provide the service and validation layer. The extraction provider is used only to propose schema-shaped values; the backend remains responsible for parsing and validating the returned data.
+React and TypeScript power the browser workspace. FastAPI and Pydantic provide the service and validation layer, while the extraction provider proposes schema-shaped values that are checked by the backend before being displayed.
