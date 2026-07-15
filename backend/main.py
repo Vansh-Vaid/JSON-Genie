@@ -65,6 +65,12 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/")
+def service_info() -> dict[str, str]:
+    """Provide a friendly response when the deployed service URL is opened directly."""
+    return {"service": "JSON Genie API", "status": "ok", "health": "/health", "docs": "/docs"}
+
+
 @app.post("/extract", response_model=ExtractResponse)
 async def extract(request: ExtractRequest) -> ExtractResponse:
     try:

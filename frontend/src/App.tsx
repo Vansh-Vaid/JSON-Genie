@@ -10,7 +10,7 @@ const schemaLabels: Record<SchemaName, string> = {
   custom: 'Custom schema',
 }
 const phases = ['Reading input', 'Matching schema', 'Validating fields']
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
 const invoiceSample = `Invoice #INV-2048
 Northstar Office Supplies
 
@@ -91,7 +91,11 @@ export default function App() {
         ...current,
       ].slice(0, 5))
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'The service could not complete this inspection. Try again.')
+      setError(caught instanceof TypeError
+        ? 'The extraction service could not be reached. Check the deployed API URL and allowed origin settings.'
+        : caught instanceof Error
+          ? caught.message
+          : 'The service could not complete this inspection. Try again.')
     } finally {
       setIsLoading(false)
     }
