@@ -27,6 +27,8 @@ export default function App() {
   const [schemaName, setSchemaName] = useState<SchemaName>('invoice')
   const [customFields, setCustomFields] = useState<CustomField[]>([])
   const [result, setResult] = useState<ExtractionResult | null>(null)
+  const [undoStack, setUndoStack] = useState<ExtractionResult[]>([])
+  const [redoStack, setRedoStack] = useState<ExtractionResult[]>([])
   const [history, setHistory] = useState<HistoryEntry[]>(() => {
     try {
       const raw = window.localStorage.getItem('json-genie-history')
@@ -71,6 +73,11 @@ export default function App() {
   }
 
   const extract = async () => {
+    // record current result for undo stack
+    setUndoStack(current => {
+      const next = result ? [result, ...current].slice(0, 10) : current
+      return next
+    })
     if (!text.trim()) return
     if (schemaName === 'custom' && (!customFields.length || customFields.some(field => !field.name.trim()))) {
       setError('Add a name for every custom field before inspecting the text.')
@@ -110,6 +117,9 @@ export default function App() {
           ...current,
         ].slice(0, 5)
         try { window.localStorage.setItem('json-genie-history', JSON.stringify(next)) } catch {}
+        // reset undo/redo stacks for new runs
+        setUndoStack([])
+        setRedoStack([])
         return next
       })
     } catch (caught) {
@@ -129,8 +139,48 @@ export default function App() {
     setError(null)
   }
 
+  const undo = () => {
+    setUndoStack(u => {
+      if (!u.length) return u
+      const [prev, ...rest] = u
+      if (result) setRedoStack(r => [result, ...r].slice(0, 10))
+      setResult(prev)
+      return rest
+    })
+  }
+
+  const redo = () => {
+    setRedoStack(r => {
+      if (!r.length) return r
+      const [next, ...rest] = r
+      if (result) setUndoStack(u => [result, ...u].slice(0, 10))
+      setResult(next)
+      return rest
+    })
+  }
+
+  // keyboard shortcuts: Ctrl/Cmd+Enter = extract, Ctrl/Cmd+Z = undo, Ctrl/Cmd+Y or Ctrl+Shift+Z = redo
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault(); extract();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !e.shiftKey) {
+        e.preventDefault(); undo();
+      }
+      if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'y' || (e.shiftKey && e.key.toLowerCase() === 'z'))) {
+        e.preventDefault(); redo();
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [result])
+
   const applyOverrides = async (schemaNameParam: SchemaName, overrides: Record<string, unknown>, baseResult?: Record<string, unknown>) => {
     setIsResolving(true)
+    // push current into undo stack
+    setUndoStack(current => result ? [result, ...current].slice(0, 10) : current)
+    setRedoStack([])
     try {
       const response = await fetch(`${API_URL}/apply_overrides`, {
         method: 'POST',
@@ -178,6 +228,8 @@ export default function App() {
         </div>
         <div className="topbar-actions">
           <a className="nav-icon-button" href="https://github.com/Vansh-Vaid/JSON-Genie" target="_blank" rel="noreferrer" aria-label="Open JSON Genie on GitHub" title="GitHub"><Icon name="github" size={16} /></a>
+          <button className="nav-icon-button" type="button" aria-label="Undo last edit" title="Undo (Ctrl+Z)" onClick={undo} disabled={!undoStack.length}><Icon name="arrow-left" size={16} /></button>
+          <button className="nav-icon-button" type="button" aria-label="Redo last edit" title="Redo (Ctrl+Y)" onClick={redo} disabled={!redoStack.length}><Icon name="arrow-right" size={16} /></button>
           <button className="nav-icon-button" type="button" aria-label="Settings" title="Settings coming soon" disabled><Icon name="settings" size={16} /></button>
           <button className="theme-toggle" type="button" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} onClick={() => setTheme(current => current === 'light' ? 'dark' : 'light')}>
             <Icon name={theme === 'light' ? 'moon' : 'sun'} size={16} />

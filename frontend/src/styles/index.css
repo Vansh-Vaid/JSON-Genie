@@ -147,6 +147,25 @@ button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-
 
 @keyframes card-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes resolve-trace { from { top: 12%; opacity: 0; } 12% { opacity: 1; } to { top: 88%; opacity: 0; } }
+
+/* Bulk editor modal */
+.bulk-editor-backdrop { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(2,2,6,.6); z-index: 40; }
+.bulk-editor { width: min(920px, calc(100% - 80px)); max-height: calc(100vh - 120px); overflow: auto; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: 0 40px 80px rgba(3,3,12,.6); padding: 16px; }
+.bulk-editor-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.bulk-editor-header h2 { margin: 0; font-family: var(--font-display); font-size: 18px }
+.bulk-editor-body { display: grid; gap: 8px; }
+.bulk-editor-row { display: flex; align-items: center; gap: 12px; padding: 8px; border-bottom: 1px dashed var(--border); }
+.bulk-label { min-width: 220px; display:flex; flex-direction: column; }
+.bulk-label small { color: var(--text-faint); font-family: var(--font-data); font-size: 11px; }
+.bulk-editor-footer { display:flex; justify-content:flex-end; gap:12px; margin-top:12px }
+
+/* Confidence badge micro-interaction */
+.confidence { margin-left: 8px; padding: 4px 8px; border-radius: var(--radius-full); background: rgba(255,255,255,.03); color: var(--text-faint); font-family: var(--font-data); font-size: 11px; transition: transform .15s ease-out, background-color .15s ease-out; }
+.field-row:hover .confidence { transform: translateY(-2px); background: rgba(108,99,255,.07); color: var(--accent); }
+
+/* subtle stamp pulse on validated fields */
+.stamp-validated { animation: stamp-pulse 1.6s ease-out both; }
+@keyframes stamp-pulse { 0% { transform: scale(.98); opacity: .95 } 50% { transform: scale(1.02); opacity: 1 } 100% { transform: scale(1); opacity: 1 } }
 @keyframes resolve-match { from { color: var(--text-muted); text-shadow: none; transform: translateY(0); } to { color: var(--signature); text-shadow: 0 0 12px rgba(212,168,87,.35); transform: translateY(-2px); } }
 @keyframes resolved-settle { from { background: rgba(108,99,255,.22); box-shadow: 0 0 0 rgba(108,99,255,0); } to { background: transparent; box-shadow: 0 0 20px -12px rgba(108,99,255,.9); } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } .resolve-overlay { display: none; }.source-text.is-resolving { color: var(--text-primary); caret-color: auto; } }

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { CustomField, ExtractionResult, HistoryEntry, SchemaName } from '../types'
 import { FieldRow } from './FieldRow'
 import { Icon } from './Icon'
+import { BulkEditor } from './BulkEditor'
 
 const presetFields: Record<Exclude<SchemaName, 'custom'>, { name: string; type: string }[]> = {
   invoice: [
@@ -36,6 +37,7 @@ export function ResultPane({ result, isLoading, phase, error, history, schemaNam
   const [raw, setRaw] = useState(false)
   const [copied, setCopied] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
+  const [bulkOpen, setBulkOpen] = useState(false)
   const preview = useMemo(() => schemaName === 'custom'
     ? customFields.map(field => ({ name: field.name || 'unnamed_field', type: field.type }))
     : presetFields[schemaName], [schemaName, customFields])
@@ -121,12 +123,14 @@ export function ResultPane({ result, isLoading, phase, error, history, schemaNam
     {result && !isLoading && <>
       <div className="result-toolbar">
         <div className="result-summary"><span className={result.missing_count || result.mismatch_count ? 'summary-number summary-number-flag' : 'summary-number'}>{String(result.matched_count).padStart(2, '0')}<i>/</i>{String(result.fields.length).padStart(2, '0')}</span><p><strong>fields matched</strong><span>{result.missing_count || result.mismatch_count ? `${result.missing_count + result.mismatch_count} needs review` : 'all fields validated'}</span></p></div>
-        <div className="result-actions"><button className="view-toggle" type="button" aria-pressed={raw} onClick={() => setRaw(!raw)}><Icon name={raw ? 'list' : 'code'} size={14} /> {raw ? 'Field view' : 'Raw JSON'}</button><button className="icon-button" type="button" onClick={copy}><Icon name={copied ? 'check' : 'copy'} size={14} /> {copied ? 'Copied' : 'Copy'}</button><button className="icon-button" type="button" onClick={download}><Icon name="download" size={14} /> Download</button></div>
+        <div className="result-actions"><button className="view-toggle" type="button" aria-pressed={raw} onClick={() => setRaw(!raw)}><Icon name={raw ? 'list' : 'code'} size={14} /> {raw ? 'Field view' : 'Raw JSON'}</button><button className="icon-button" type="button" onClick={copy}><Icon name={copied ? 'check' : 'copy'} size={14} /> {copied ? 'Copied' : 'Copy'}</button><button className="icon-button" type="button" onClick={download}><Icon name="download" size={14} /> Download</button><button className="icon-button" type="button" onClick={() => setBulkOpen(true)}><Icon name="plus" size={14} /> Bulk edit</button></div>
       </div>
-      {raw ? <pre className="raw-json">{JSON.stringify(result.result, null, 2)}</pre> : <div className="field-list">{result.fields.map(field => <FieldRow key={field.name} field={field} onChange={handleFieldChange} />)}</div>}
+      {raw ? <pre className="raw-json">{JSON.stringify(result.result, null, 2)}</pre> : <div className="field-list">{result.fields.map(field => <FieldRow key={field.name} field={field} onChange={handleFieldChange} disabled={revalidating} />)}</div>}
     </>}
     {history.length > 0 && <nav className="history" aria-label="Recent runs"><h2 className="section-label">Recent runs</h2><div className="history-list">{history.map(entry => <button key={entry.id} type="button" onClick={() => onSelectHistory(entry)}><span>{entry.schemaName.replace('_', ' ')}</span><time>{entry.createdAt}</time></button>)}</div></nav>}
     {notice && <div className="toast" role="status"><Icon name="check" size={15} /> {notice}</div>}
+
+    {bulkOpen && result && <BulkEditor result={result} onClose={() => setBulkOpen(false)} onApply={async (overrides) => { setBulkOpen(false); setRevalidating(true); try { await onApplyOverrides?.(schemaName, overrides, result.result); setNotice('Bulk edits applied'); } catch (err) { setNotice('Failed to apply bulk edits'); } finally { setRevalidating(false) } }} />}
   </section>
 }
 
