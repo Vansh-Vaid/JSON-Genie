@@ -55,6 +55,18 @@ export default function App() {
     window.localStorage.setItem('json-genie-theme', theme)
   }, [theme])
 
+  // prefetch Lottie player for high-end experience if enabled
+  useEffect(() => {
+    if (import.meta.env.VITE_ENABLE_LOTTIE === 'true') {
+      const s = document.createElement('link')
+      s.rel = 'preload'
+      s.as = 'script'
+      s.href = 'https://unpkg.com/@lottiefiles/lottie-player@^1.0.0/dist/lottie-player.js'
+      document.head.appendChild(s)
+      setTimeout(() => document.head.removeChild(s), 60000)
+    }
+  }, [])
+
   useEffect(() => {
     if (!isLoading) return
     const timer = window.setInterval(() => setPhaseIndex(current => Math.min(current + 1, phases.length - 1)), 700)
@@ -108,6 +120,12 @@ export default function App() {
       setResult(extraction)
       setResolveCycle(current => current + 1)
       setIsResolving(true)
+      // top-notch celebratory effect when every field validated
+      try {
+        if (extraction.matched_count === extraction.fields.length && extraction.fields.length > 0) {
+          window.dispatchEvent(new CustomEvent('json-genie-confetti', { detail: { } }))
+        }
+      } catch {} 
       setHistory(current => {
         const next = [
           {
