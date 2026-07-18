@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { InputPane } from './components/InputPane'
 import { ResultPane } from './components/ResultPane'
 import { Icon } from './components/Icon'
+import { HeroGraphic } from './components/HeroGraphic'
 import type { CustomField, ExtractionResult, HistoryEntry, SchemaName } from './types'
 
 const schemaLabels: Record<SchemaName, string> = {
@@ -237,6 +238,7 @@ export default function App() {
         </div>
       </header>
       <section className="workbench" aria-label="JSON Genie workspace">
+        <HeroGraphic />
         <InputPane
           text={text}
           onTextChange={setText}
