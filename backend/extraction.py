@@ -8,7 +8,13 @@ import os
 from datetime import date
 from typing import Any
 
-from google import genai
+from types import SimpleNamespace
+try:
+    from google import genai
+except Exception:
+    # Allow tests to monkeypatch extraction.genai when the package isn't installed.
+    # Provide a minimal Client attribute so tests can monkeypatch it with monkeypatch.setattr.
+    genai = SimpleNamespace(Client=lambda api_key: None)
 from pydantic import BaseModel, ValidationError
 
 from schemas import SchemaField, tool_schema
