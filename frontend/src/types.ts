@@ -3,7 +3,7 @@ export type SchemaName = 'invoice' | 'job_posting' | 'email' | 'custom'
 export type FieldStatus = 'validated' | 'missing' | 'mismatch'
 
 export interface CustomField { name: string; type: FieldType; required: boolean }
-export interface ResultField extends CustomField { value: unknown; status: FieldStatus }
+export interface ResultField extends CustomField { value: unknown; status: FieldStatus; confidence?: number }
 export interface ExtractionResult {
   schema_name: SchemaName
   result: Record<string, unknown>

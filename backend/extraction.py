@@ -107,8 +107,11 @@ def _call_gemini(text: str, model: type[BaseModel]) -> dict[str, Any]:
             raise
 
 
-def normalize_model_response(raw: dict[str, Any], model: type[BaseModel], specs: list[SchemaField]) -> tuple[dict[str, Any], dict[str, str]]:
-    """Validate response. Invalid values become null and are explicitly marked as mismatches."""
+def normalize_model_response(raw: dict[str, Any], model: type[BaseModel], specs: list[SchemaField]) -> tuple[dict[str, Any], dict[str, str], dict[str, float]]:
+    """Validate response. Invalid values become null and are explicitly marked as mismatches.
+
+    Also return a per-field confidence score (0.0-1.0) computed heuristically from the status.
+    """
     names = {spec.name for spec in specs}
     statuses = {name: "missing" if raw.get(name) is None else "validated" for name in names}
     candidate = {name: raw.get(name) for name in names}
@@ -169,7 +172,11 @@ def normalize_model_response(raw: dict[str, Any], model: type[BaseModel], specs:
                 statuses[name] = "mismatch"
         # Candidate now contains only model-compatible values or explicit nulls.
         trusted = model.model_validate(candidate, strict=True)
-    return trusted.model_dump(mode="json"), statuses
+
+    # compute heuristic confidences
+    confidence_map = {"validated": 0.92, "mismatch": 0.5, "missing": 0.0}
+    confidences = {name: confidence_map.get(statuses.get(name, "missing"), 0.0) for name in names}
+    return trusted.model_dump(mode="json"), statuses, confidences
 
 
 async def extract_document(text: str, model: type[BaseModel], specs: list[SchemaField]) -> tuple[dict[str, Any], dict[str, str]]:

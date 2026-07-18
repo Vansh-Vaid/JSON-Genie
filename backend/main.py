@@ -35,6 +35,7 @@ class ResultField(BaseModel):
     required: bool
     value: Any
     status: Literal["validated", "missing", "mismatch"]
+    confidence: float | None = None
 
 
 class ExtractResponse(BaseModel):
@@ -79,7 +80,7 @@ async def extract(request: ExtractRequest) -> ExtractResponse:
         raise HTTPException(status_code=422, detail=str(error)) from error
 
     try:
-        result, statuses = await extract_document(request.text, model, specs)
+        result, statuses, confidences = await extract_document(request.text, model, specs)
     except Exception as error:
         logger.exception("Gemini extraction failed")
         raise HTTPException(
@@ -87,7 +88,10 @@ async def extract(request: ExtractRequest) -> ExtractResponse:
             detail=extraction_error_message(error),
         ) from error
 
-    fields = [ResultField(**spec.model_dump(), value=result[spec.name], status=statuses[spec.name]) for spec in specs]
+    fields = [
+        ResultField(**spec.model_dump(), value=result[spec.name], status=statuses[spec.name], confidence=confidences.get(spec.name))
+        for spec in specs
+    ]
     counts = {status: list(statuses.values()).count(status) for status in ("validated", "missing", "mismatch")}
     return ExtractResponse(
         schema_name=request.schema_name,

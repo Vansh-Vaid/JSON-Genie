@@ -8,7 +8,7 @@ from extraction import normalize_model_response
 
 def test_invoice_sample_validates():
     model, specs = get_schema("invoice")
-    result, statuses = normalize_model_response(
+    result, statuses, confidences = normalize_model_response(
         {"vendor_name": "Northstar Office", "invoice_number": "INV-2048", "total_amount": 1349.5,
          "due_date": "2026-08-01", "line_items": ["Ergonomic chairs", "Delivery"]}, model, specs
     )
@@ -18,7 +18,7 @@ def test_invoice_sample_validates():
 
 def test_sparse_job_post_marks_missing():
     model, specs = get_schema("job_posting")
-    result, statuses = normalize_model_response(
+    result, statuses, confidences = normalize_model_response(
         {"title": "Data Analyst", "company": "Acme", "location": None, "salary_range": None, "required_skills": None}, model, specs
     )
     assert result["location"] is None
@@ -27,12 +27,12 @@ def test_sparse_job_post_marks_missing():
 
 def test_email_sample_and_custom_schema_runtime_compilation():
     model, specs = get_schema("email")
-    result, _ = normalize_model_response(
+    result, _, _ = normalize_model_response(
         {"sender": "meera@example.com", "subject": "Project review", "intent": "Schedule a review", "action_items": ["Send agenda"]}, model, specs
     )
     assert result["sender"] == "meera@example.com"
     custom, custom_specs = build_custom_schema([FieldSpec(name="priority", type="number", required=True)])
-    custom_result, statuses = normalize_model_response({"priority": "urgent"}, custom, custom_specs)
+    custom_result, statuses, _ = normalize_model_response({"priority": "urgent"}, custom, custom_specs)
     assert custom_result["priority"] is None
     assert statuses["priority"] == "mismatch"
 
@@ -42,7 +42,7 @@ def test_custom_schema_accepts_iso_date_and_json_integer_number():
         FieldSpec(name="review_date", type="date", required=True),
         FieldSpec(name="headcount", type="number", required=True),
     ])
-    result, statuses = normalize_model_response({"review_date": "2026-08-05", "headcount": 12}, custom, specs)
+    result, statuses, _ = normalize_model_response({"review_date": "2026-08-05", "headcount": 12}, custom, specs)
     assert result == {"review_date": "2026-08-05", "headcount": 12}
     assert set(statuses.values()) == {"validated"}
 
