@@ -1,0 +1,132 @@
+{"kind":"deck","id":"pr/74ekqf","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"Title Slide","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"subtitle","type":"subtitle","textPreview":"Click to edit Master subtitle style"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Title and Content","placeholders":[{"name":"text placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"},{"name":"title","type":"title","textPreview":"Click to edit Master title style"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"Two Content","placeholders":[{"name":"text placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"},{"name":"text placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"title","type":"title","textPreview":"Click to edit Master title style"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"Three Content","placeholders":[{"name":"text placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"},{"name":"text placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"text placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"title","type":"title","textPreview":"Click to edit Master title style"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout5.xml","name":"Four Content","placeholders":[{"name":"text placeholder 2","textPreview":"Click to edit Master"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"},{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master"},{"name":"text placeholder 2","textPreview":"Click to edit Master"},{"name":"body","type":"body","textPreview":"Click to edit Master"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout6.xml","name":"Title Only","placeholders":[{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"},{"name":"title","type":"title","textPreview":"Click to edit Master title style"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout7.xml","name":"Footer Only","placeholders":[{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout8.xml","name":"Blank"}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"JSON Genie","textShapes":3}
+{"kind":"textbox","id":"sh/7qp4be9c","slide":1,"name":"Title 3","placeholder":"title","text":"JSON Genie","textPreview":"JSON Genie","textChars":10,"textLines":1,"bbox":[43.65,200.24,753.27,261.57]}
+{"kind":"textbox","id":"sh/65g3298r","slide":1,"name":"Subtitle 4","placeholder":"subtitle","text":"Turning everyday text into\ndependable, inspectable JSON","textPreview":"Turning everyday text into | dependable, inspectable JSON","textChars":55,"textLines":2,"bbox":[43.65,552.73,725.51,113.41]}
+{"kind":"textbox","id":"sh/ts7md4r2","slide":1,"name":"Subtitle 4","text":"PROJECT PRESENTATION","textPreview":"PROJECT PRESENTATION","textChars":20,"textLines":1,"bbox":[43.65,41.18,598.67,68.15]}
+{"kind":"image","id":"im/dkb2xcfy","slide":1,"name":"Picture 6","bbox":[829.3,0,450.7,720]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":""}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"Raw text, resolved","textShapes":3}
+{"kind":"textbox","id":"sh/b29kza94","slide":2,"name":"Title 3","placeholder":"title","text":"Raw text, resolved\ninto review-ready data","textPreview":"Raw text, resolved | into review-ready data","textChars":41,"textLines":2,"bbox":[41.33,389.78,992,261.57]}
+{"kind":"textbox","id":"sh/x4r21kru","slide":2,"name":"Subtitle 4","text":"JSON GENIE","textPreview":"JSON GENIE","textChars":10,"textLines":1,"bbox":[41.33,41.18,646.49,68.15]}
+{"kind":"textbox","id":"sh/r65knqtk","slide":2,"name":"Subtitle 4","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[828,41.18,410.67,68.15]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":""}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"03","textShapes":2}
+{"kind":"shape","id":"sh/3ah8rqlg","slide":3,"name":"Footer Placeholder 4","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/cza94vmx","slide":3,"name":"Slide Number Placeholder 1","placeholder":"slideNumber","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/d0jax03i","slide":3,"name":"Title 2","placeholder":"title","text":"One visible path from source text to usable JSON","textPreview":"One visible path from source text to usable JSON","textChars":48,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"table","id":"tb/5wz690z6","slide":3,"name":"Table 3","rows":6,"cols":2,"preview":"01 | Paste any raw text","bbox":[41.33,218.37,1197.33,410.96]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":""}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"A customer email, invoice, or job post may contain the information a system n...","textShapes":4}
+{"kind":"textbox","id":"sh/fapwfyds","slide":4,"name":"Google Shape;534;p58","text":"A customer email, invoice, or job post may contain the information a system needs—but scattered across prose, formats, and assumptions.","textPreview":"A customer email, invoice, or job post may contain the information a system needs—but scattered across prose, formats, and assumptions.","textChars":135,"textLines":1,"bbox":[41.33,193.05,580.91,436.28]}
+{"kind":"shape","id":"sh/doj29oba","slide":4,"name":"Footer Placeholder 5","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/p0rel8vu","slide":4,"name":"Google Shape;532;p58","placeholder":"slideNumber","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/ozydc3u9","slide":4,"name":"Google Shape;533;p58","placeholder":"title","text":"Unstructured text is rich in detail but difficult to use reliably","textPreview":"Unstructured text is rich in detail but difficult to use reliably","textChars":65,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"textbox","id":"sh/1cj2d8b6","slide":4,"name":"Google Shape;534;p58","text":"JSON Genie gives that information a schema before it becomes an output. The result is easier to inspect, reuse, and trust.","textPreview":"JSON Genie gives that information a schema before it becomes an output. The result is easier to inspect, reuse, and trust.","textChars":122,"textLines":1,"bbox":[657.75,230.2,581.33,399.13]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":""}
+{"kind":"slide","id":"sl/x8f69ofe","slide":5,"title":"05","textShapes":5}
+{"kind":"shape","id":"sh/87ipkzal","slide":5,"name":"Footer Placeholder 3","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/q9gz25wb","slide":5,"name":"Google Shape;532;p58","placeholder":"slideNumber","text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/rapgbaxw","slide":5,"name":"Google Shape;533;p58","placeholder":"title","text":"Three ready-made schemas make common extraction work immediate","textPreview":"Three ready-made schemas make common extraction work immediate","textChars":62,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"textbox","id":"sh/47yh0ve5","slide":5,"name":"Google Shape;534;p58","text":"Invoice\nVendor, reference number, total, due date, and line items.","textPreview":"Invoice | Vendor, reference number, total, due date, and line items.","textChars":66,"textLines":2,"bbox":[41.33,353.33,374.67,276]}
+{"kind":"textbox","id":"sh/yhg7epsj","slide":5,"name":"Content Placeholder 1","text":"Job posting\nTitle, company, location, salary range, and skills.","textPreview":"Job posting | Title, company, location, salary range, and skills.","textChars":63,"textLines":2,"bbox":[864,353.33,374.67,276]}
+{"kind":"textbox","id":"sh/zi98nu94","slide":5,"name":"Content Placeholder 2","text":"Email\nSender, subject, intent, and follow-up action items.","textPreview":"Email | Sender, subject, intent, and follow-up action items.","textChars":58,"textLines":2,"bbox":[452.67,353.33,374.67,276]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":5,"text":""}
+{"kind":"slide","id":"sl/gnmp4jqx","slide":6,"title":"06","textShapes":5}
+{"kind":"shape","id":"sh/ydkbm5sv","slide":6,"name":"Footer Placeholder 3","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/sra9kfyx","slide":6,"name":"Google Shape;532;p58","placeholder":"slideNumber","text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/tsjad0z2","slide":6,"name":"Google Shape;533;p58","placeholder":"title","text":"Custom schemas keep the product useful beyond preset workflows","textPreview":"Custom schemas keep the product useful beyond preset workflows","textChars":62,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"textbox","id":"sh/zedcfa9g","slide":6,"name":"Google Shape;558;p61","text":"Define fields\nName exactly what matters to your workflow.","textPreview":"Define fields | Name exactly what matters to your workflow.","textChars":57,"textLines":2,"bbox":[41.33,421.33,374.67,208]}
+{"kind":"textbox","id":"sh/kzmdova1","slide":6,"name":"Google Shape;559;p61","text":"Set data types\nUse strings, numbers, dates, booleans, or lists.","textPreview":"Set data types | Use strings, numbers, dates, booleans, or lists.","textChars":63,"textLines":2,"bbox":[453.33,421.33,374.67,208]}
+{"kind":"textbox","id":"sh/l0vuh0rm","slide":6,"name":"Google Shape;560;p61","text":"Mark requirements\nMake important fields explicit before extraction.","textPreview":"Mark requirements | Make important fields explicit before extraction.","textChars":67,"textLines":2,"bbox":[864.28,421.33,374.67,208]}
+{"kind":"shape","id":"sh/eh0ba1sr","slide":6,"name":"Google Shape;561;p61","bbox":[449.33,355.1,33.13,37.15]}
+{"kind":"shape","id":"sh/fi9c369c","slide":6,"name":"Google Shape;562;p61","bbox":[42.14,354.67,34.34,38.01]}
+{"kind":"shape","id":"sh/baxkjqlk","slide":6,"name":"Google Shape;563;p61","bbox":[864.21,357.67,35.55,28.44]}
+{"kind":"notes","id":"nt/gnmp4jqx","slide":6,"text":""}
+{"kind":"slide","id":"sl/udsvah03","slide":7,"title":"07","textShapes":6}
+{"kind":"shape","id":"sh/1cfmhgne","slide":7,"name":"Footer Placeholder 1","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/94zaxgfa","slide":7,"name":"Google Shape;532;p58","placeholder":"slideNumber","text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/83qtobep","slide":7,"name":"Google Shape;533;p58","placeholder":"title","text":"Extraction is designed to be visible and reviewable","textPreview":"Extraction is designed to be visible and reviewable","textChars":51,"textLines":1,"bbox":[41.33,36.17,1197.33,134.7]}
+{"kind":"shape","id":"sh/oza1gfyh","slide":7,"name":"Rounded Rectangle 9","bbox":[452.38,353.33,374.67,276]}
+{"kind":"shape","id":"sh/p0ji9kf2","slide":7,"name":"Rounded Rectangle 10","bbox":[864,353.33,374.67,276]}
+{"kind":"textbox","id":"sh/2xsjepgb","slide":7,"name":"Content Placeholder 9","text":"Source stays in view\nThe original text remains beside the resolved fields.","textPreview":"Source stays in view | The original text remains beside the resolved fields.","textChars":74,"textLines":2,"bbox":[485.23,435.29,309.64,150.43]}
+{"kind":"textbox","id":"sh/3y107axw","slide":7,"name":"Content Placeholder 10","text":"Schema is explicit\nA compact preview makes the extraction target clear.","textPreview":"Schema is explicit | A compact preview makes the extraction target clear.","textChars":71,"textLines":2,"bbox":[896.18,435.29,309.64,150.43]}
+{"kind":"shape","id":"sh/cnu1kzyd","slide":7,"name":"Google Shape;340;p61","bbox":[485.84,387.83,24.55,24.54]}
+{"kind":"shape","id":"sh/do3id4fy","slide":7,"name":"Google Shape;340;p61","bbox":[895.88,387.83,24.55,24.54]}
+{"kind":"shape","id":"sh/9gzml0nq","slide":7,"name":"Rounded Rectangle 5","bbox":[40.77,353.33,374.67,276]}
+{"kind":"textbox","id":"sh/ofq5svm5","slide":7,"name":"Content Placeholder 9","text":"Results are inspectable\nSwitch between field-level review and raw JSON.","textPreview":"Results are inspectable | Switch between field-level review and raw JSON.","textChars":71,"textLines":2,"bbox":[73.61,435.29,309.64,150.43]}
+{"kind":"shape","id":"sh/bih4na5w","slide":7,"name":"Google Shape;340;p61","bbox":[74.23,387.83,24.55,24.54]}
+{"kind":"textbox","id":"sh/ah8nu54b","slide":7,"name":"Content Placeholder 15","text":"JSON Genie is not a black box. It preserves the context people need to verify the result, then makes the structured output easy to take forward.","textPreview":"JSON Genie is not a black box. It preserves the context people need to verify the result, then makes the structured output easy to take f...","textChars":144,"textLines":1,"bbox":[41.33,152.29,1197.33,171.05]}
+{"kind":"notes","id":"nt/udsvah03","slide":7,"text":""}
+{"kind":"slide","id":"sl/m90b6t0r","slide":8,"title":"08","textShapes":9}
+{"kind":"shape","id":"sh/zelojyl8","slide":8,"name":"Footer Placeholder 3","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/l8z690ji","slide":8,"name":"Google Shape;532;p58","placeholder":"slideNumber","text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/k7q50v2x","slide":8,"name":"Google Shape;533;p58","placeholder":"title","text":"Validation makes uncertainty visible instead of hiding it","textPreview":"Validation makes uncertainty visible instead of hiding it","textChars":57,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"textbox","id":"sh/7ahoba18","slide":8,"name":"Google Shape;534;p58","text":"Every response is checked against the chosen schema before it reaches the result panel.","textPreview":"Every response is checked against the chosen schema before it reaches the result panel.","textChars":87,"textLines":1,"bbox":[41.33,180.83,581.33,90.83]}
+{"kind":"textbox","id":"sh/xc3mho32","slide":8,"name":"Content Placeholder 10","text":"Clear field status","textPreview":"Clear field status","textChars":18,"textLines":1,"bbox":[828,313.94,410.67,57.61]}
+{"kind":"shape","id":"sh/cbu58j2h","slide":8,"name":"Google Shape;340;p61","bbox":[788.21,316.55,22.32,22.31]}
+{"kind":"textbox","id":"sh/q5gb21kb","slide":8,"name":"TextBox 11","text":"Validated values are shown as structured output. Missing or mismatched values remain null, so unclear information is never silently invented.","textPreview":"Validated values are shown as structured output. Missing or mismatched values remain null, so unclear information is never silently inven...","textChars":141,"textLines":1,"bbox":[41.33,313.94,581.33,302.85]}
+{"kind":"textbox","id":"sh/e9gb61k7","slide":8,"name":"Content Placeholder 10","text":"Validated","textPreview":"Validated","textChars":9,"textLines":1,"bbox":[828,377.94,410.67,57.61]}
+{"kind":"shape","id":"sh/fapcz6ls","slide":8,"name":"Google Shape;340;p61","bbox":[788.21,380.55,22.32,22.31]}
+{"kind":"textbox","id":"sh/ozitcv29","slide":8,"name":"Content Placeholder 10","text":"Needs review","textPreview":"Needs review","textChars":12,"textLines":1,"bbox":[828,442.5,410.67,57.61]}
+{"kind":"shape","id":"sh/p0ru503u","slide":8,"name":"Google Shape;340;p61","bbox":[788.21,445.1,22.32,22.31]}
+{"kind":"textbox","id":"sh/xwnupgvy","slide":8,"name":"Content Placeholder 10","text":"Missing values","textPreview":"Missing values","textChars":14,"textLines":1,"bbox":[828,506.49,410.67,57.61]}
+{"kind":"shape","id":"sh/wvetgbud","slide":8,"name":"Google Shape;340;p61","bbox":[788.21,509.1,22.32,22.31]}
+{"kind":"textbox","id":"sh/atwbelcn","slide":8,"name":"Content Placeholder 10","text":"Raw JSON available","textPreview":"Raw JSON available","textChars":18,"textLines":1,"bbox":[828,571.83,410.67,57.61]}
+{"kind":"shape","id":"sh/lk7ut0va","slide":8,"name":"Google Shape;340;p61","bbox":[788.21,574.44,22.32,22.31]}
+{"kind":"notes","id":"nt/m90b6t0r","slide":8,"text":""}
+{"kind":"slide","id":"sl/hgzapcr6","slide":9,"title":"09","textShapes":6}
+{"kind":"shape","id":"sh/21gnuts7","slide":9,"name":"Footer Placeholder 5","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/q50nydsj","slide":9,"name":"Slide Number Placeholder 1","placeholder":"slideNumber","text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1184.17,659.17,54.5,25.33]}
+{"kind":"textbox","id":"sh/bq9orito","slide":9,"name":"Title 2","placeholder":"title","text":"Four layers turn text into trusted structured output","textPreview":"Four layers turn text into trusted structured output","textChars":52,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"textbox","id":"sh/hcfy9k3u","slide":9,"name":"Content Placeholder 9","text":"Frontend\nReact + TypeScript keep source, schema, and results together.","textPreview":"Frontend | React + TypeScript keep source, schema, and results together.","textChars":70,"textLines":2,"bbox":[41.33,213.33,581.33,172.5]}
+{"kind":"textbox","id":"sh/gb6x0zm9","slide":9,"name":"Content Placeholder 10","text":"API\nFastAPI delivers a focused extraction endpoint.","textPreview":"API | FastAPI delivers a focused extraction endpoint.","textChars":51,"textLines":2,"bbox":[656.86,213.33,581.33,172.5]}
+{"kind":"textbox","id":"sh/o3i5w3ad","slide":9,"name":"Content Placeholder 9","text":"Extraction\nGemini proposes values from raw text.","textPreview":"Extraction | Gemini proposes values from raw text.","textChars":48,"textLines":2,"bbox":[41.33,421.73,581.33,172.51]}
+{"kind":"textbox","id":"sh/p4r6p8by","slide":9,"name":"Content Placeholder 10","text":"Validation\nPydantic enforces types and exposes uncertainty.","textPreview":"Validation | Pydantic enforces types and exposes uncertainty.","textChars":59,"textLines":2,"bbox":[656.86,421.73,581.33,172.51]}
+{"kind":"notes","id":"nt/hgzapcr6","slide":9,"text":""}
+{"kind":"slide","id":"sl/14bup87q","slide":10,"title":"10","textShapes":8}
+{"kind":"shape","id":"sh/snedsvml","slide":10,"name":"Footer Placeholder 6","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/rm5czq50","slide":10,"name":"Slide Number Placeholder 3","placeholder":"slideNumber","text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/pc7qhwn6","slide":10,"name":"Title 10","placeholder":"title","text":"The extraction flow stays simple, even when the source is not","textPreview":"The extraction flow stays simple, even when the source is not","textChars":61,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"shape","id":"sh/1c7e50ni","slide":10,"name":"Google Shape;2259;p159","bbox":[35.46,354.2,1285.61,0.03]}
+{"kind":"shape","id":"sh/gbedwfmx","slide":10,"name":"Google Shape;2260;p159","bbox":[35.46,348.58,11.24,11.24]}
+{"kind":"shape","id":"sh/6lwvql4v","slide":10,"name":"Google Shape;2261;p159","bbox":[446.38,348.58,11.24,11.24]}
+{"kind":"shape","id":"sh/t8ne10n6","slide":10,"name":"Google Shape;2262;p159","bbox":[858.38,348.58,11.24,11.24]}
+{"kind":"textbox","id":"sh/ihcvml4j","slide":10,"name":"Content Placeholder 15","text":"INPUT","textPreview":"INPUT","textChars":5,"textLines":1,"bbox":[41.33,298.51,169.33,27.55]}
+{"kind":"textbox","id":"sh/3ap8fm50","slide":10,"name":"Content Placeholder 15","text":"RESOLVE","textPreview":"RESOLVE","textChars":7,"textLines":1,"bbox":[450.83,298.51,169.33,27.55]}
+{"kind":"textbox","id":"sh/gnepkr69","slide":10,"name":"Content Placeholder 15","text":"VERIFY","textPreview":"VERIFY","textChars":6,"textLines":1,"bbox":[863.33,298.51,169.33,27.55]}
+{"kind":"textbox","id":"sh/jilcvq54","slide":10,"name":"Text Placeholder 16","text":"Gemini reads the meaning of the text against the selected schema.","textPreview":"Gemini reads the meaning of the text against the selected schema.","textChars":65,"textLines":1,"bbox":[453.24,401.33,331.35,166.54]}
+{"kind":"textbox","id":"sh/honqdwnu","slide":10,"name":"Text Placeholder 16","text":"Paste a paragraph, email, note, or invoice—without requiring a fixed format.","textPreview":"Paste a paragraph, email, note, or invoice—without requiring a fixed format.","textChars":76,"textLines":1,"bbox":[41.98,401.33,331.35,166.54]}
+{"kind":"textbox","id":"sh/14rqpgne","slide":10,"name":"Text Placeholder 16","text":"Strict validation returns dependable values and makes gaps clear.","textPreview":"Strict validation returns dependable values and makes gaps clear.","textChars":65,"textLines":1,"bbox":[858.57,401.33,331.35,166.54]}
+{"kind":"notes","id":"nt/14bup87q","slide":10,"text":""}
+{"kind":"slide","id":"sl/y5wne50z","slide":11,"title":"11","textShapes":8}
+{"kind":"shape","id":"sh/5gnmp4bq","slide":11,"name":"Footer Placeholder 6","placeholder":"footer","bbox":[41.33,659.31,374.67,25.33]}
+{"kind":"textbox","id":"sh/itw3upcf","slide":11,"name":"Slide Number Placeholder 3","placeholder":"slideNumber","text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1184.18,659.24,54.48,25.33]}
+{"kind":"textbox","id":"sh/upg3i18r","slide":11,"name":"Title 10","placeholder":"title","text":"Results are ready for review and next steps","textPreview":"Results are ready for review and next steps","textChars":43,"textLines":1,"bbox":[41.33,36.12,1197.33,109.97]}
+{"kind":"shape","id":"sh/wrelszu9","slide":11,"name":"Google Shape;2259;p159","bbox":[35.46,560.8,1285.61,0.03]}
+{"kind":"shape","id":"sh/hsn2l4bu","slide":11,"name":"Google Shape;2260;p159","bbox":[35.46,555.18,11.24,11.24]}
+{"kind":"shape","id":"sh/je5knut0","slide":11,"name":"Google Shape;2261;p159","bbox":[446.38,555.18,11.24,11.24]}
+{"kind":"shape","id":"sh/4felwzu5","slide":11,"name":"Google Shape;2262;p159","bbox":[858.38,555.18,11.24,11.24]}
+{"kind":"shape","id":"sh/md4nipsr","slide":11,"name":"Rounded Rectangle 19","bbox":[41.33,147.17,374.67,380]}
+{"kind":"textbox","id":"sh/nedoru9c","slide":11,"name":"Content Placeholder 8","text":"Review fields\nSee each value, its type, and its validation status at a glance.","textPreview":"Review fields | See each value, its type, and its validation status at a glance.","textChars":78,"textLines":2,"bbox":[73.85,189.69,309.64,269.48]}
+{"kind":"shape","id":"sh/8zm5kzax","slide":11,"name":"Rounded Rectangle 21","bbox":[452.33,147.17,374.67,380]}
+{"kind":"textbox","id":"sh/90v6t4ri","slide":11,"name":"Content Placeholder 8","text":"Use the JSON\nCopy structured output or download a clean JSON file.","textPreview":"Use the JSON | Copy structured output or download a clean JSON file.","textChars":66,"textLines":2,"bbox":[484.85,189.69,309.64,269.48]}
+{"kind":"shape","id":"sh/a14nm9s3","slide":11,"name":"Rounded Rectangle 23","bbox":[864.83,147.17,374.67,380]}
+{"kind":"textbox","id":"sh/v2xovu9o","slide":11,"name":"Content Placeholder 8","text":"Keep context\nRecent session runs stay available in the browser for comparison.","textPreview":"Keep context | Recent session runs stay available in the browser for comparison.","textChars":78,"textLines":2,"bbox":[897.35,189.69,309.64,269.48]}
+{"kind":"textbox","id":"sh/6hw3y9sb","slide":11,"name":"Text Placeholder 16","text":"REVIEW","textPreview":"REVIEW","textChars":6,"textLines":1,"bbox":[446.38,588.18,272.54,41.15]}
+{"kind":"textbox","id":"sh/1cr2tg72","slide":11,"name":"Text Placeholder 16","text":"EXPORT","textPreview":"EXPORT","textChars":6,"textLines":1,"bbox":[41.04,588.18,272.54,41.15]}
+{"kind":"textbox","id":"sh/gbylkbqh","slide":11,"name":"Text Placeholder 16","text":"CONTINUITY","textPreview":"CONTINUITY","textChars":10,"textLines":1,"bbox":[863.56,588.18,272.54,41.15]}
+{"kind":"notes","id":"nt/y5wne50z","slide":11,"text":""}
+{"kind":"slide","id":"sl/l0bepsfm","slide":12,"title":"Make raw text","textShapes":3}
+{"kind":"textbox","id":"sh/8fil4b21","slide":12,"name":"Title 3","placeholder":"title","text":"Make raw text\nusable data","textPreview":"Make raw text | usable data","textChars":25,"textLines":2,"bbox":[41.33,182.55,992,261.57]}
+{"kind":"textbox","id":"sh/tgr2xg3m","slide":12,"name":"Subtitle 4","placeholder":"subtitle","text":"JSON Genie\nSchema-led extraction with visible validation","textPreview":"JSON Genie | Schema-led extraction with visible validation","textChars":56,"textLines":2,"bbox":[41.33,522.13,374.67,113.41]}
+{"kind":"textbox","id":"sh/md0321kv","slide":12,"name":"Subtitle 4","text":"PROJECT SUMMARY","textPreview":"PROJECT SUMMARY","textChars":15,"textLines":1,"bbox":[41.33,41.18,169.33,68.15]}
+{"kind":"notes","id":"nt/l0bepsfm","slide":12,"text":""}
