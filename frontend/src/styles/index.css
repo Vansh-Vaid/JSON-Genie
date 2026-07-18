@@ -183,6 +183,30 @@ button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-
 
 /* subtle parallax effect on scroll for hero */
 .hero-parallax { transform: translateZ(0); will-change: transform; transition: transform .12s linear; }
+
+/* Animated icons */
+.icon-animate { transform-origin: center; display: inline-block; }
+.icon-animate.sparkles { animation: sparkles-rotate 4s linear infinite; }
+.icon-animate.check { animation: check-pop .9s ease-out 1; }
+.icon-animate.download { animation: bob 2.6s ease-in-out infinite; }
+
+@keyframes sparkles-rotate { 0% { transform: rotate(0deg) } 100% { transform: rotate(360deg) } }
+@keyframes check-pop { 0% { transform: scale(.9); opacity: .6 } 60% { transform: scale(1.06); opacity: 1 } 100% { transform: scale(1); opacity: 1 } }
+@keyframes bob { 0% { transform: translateY(0) } 50% { transform: translateY(-6px) } 100% { transform: translateY(0) } }
+
+/* Staggered entrance for field rows */
+.result-pane.entering .field-row { opacity: 0; transform: translateY(10px); animation: row-enter .56s cubic-bezier(.22,.9,.3,1) both; }
+.result-pane.entering .field-row:nth-child(1) { animation-delay: .02s }
+.result-pane.entering .field-row:nth-child(2) { animation-delay: .06s }
+.result-pane.entering .field-row:nth-child(3) { animation-delay: .10s }
+.result-pane.entering .field-row:nth-child(4) { animation-delay: .14s }
+.result-pane.entering .field-row:nth-child(5) { animation-delay: .18s }
+@keyframes row-enter { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient, .hero-shapes, .hero-animated .spark, .icon-animate, .field-row, .stamp-validated { animation: none !important; transition: none !important; }
+}
 @keyframes resolve-match { from { color: var(--text-muted); text-shadow: none; transform: translateY(0); } to { color: var(--signature); text-shadow: 0 0 12px rgba(212,168,87,.35); transform: translateY(-2px); } }
 @keyframes resolved-settle { from { background: rgba(108,99,255,.22); box-shadow: 0 0 0 rgba(108,99,255,0); } to { background: transparent; box-shadow: 0 0 20px -12px rgba(108,99,255,.9); } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } .resolve-overlay { display: none; }.source-text.is-resolving { color: var(--text-primary); caret-color: auto; } }

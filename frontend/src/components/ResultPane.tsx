@@ -43,6 +43,15 @@ export function ResultPane({ result, isLoading, phase, error, history, schemaNam
     : presetFields[schemaName], [schemaName, customFields])
 
   useEffect(() => { setRaw(false); setCopied(false) }, [result])
+
+  // staggered entrance for field rows on new result
+  const [entering, setEntering] = useState(false)
+  useEffect(() => {
+    if (!result) return
+    setEntering(true)
+    const t = window.setTimeout(() => setEntering(false), 900)
+    return () => window.clearTimeout(t)
+  }, [result])
   useEffect(() => {
     if (!notice) return
     const timer = window.setTimeout(() => setNotice(null), 2200)

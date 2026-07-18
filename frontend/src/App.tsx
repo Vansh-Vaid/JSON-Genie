@@ -3,6 +3,7 @@ import { InputPane } from './components/InputPane'
 import { ResultPane } from './components/ResultPane'
 import { Icon } from './components/Icon'
 import { HeroGraphic } from './components/HeroGraphic'
+import { LottieHero } from './components/LottieHero'
 import type { CustomField, ExtractionResult, HistoryEntry, SchemaName } from './types'
 
 const schemaLabels: Record<SchemaName, string> = {
@@ -239,6 +240,7 @@ export default function App() {
       </header>
       <section className="workbench" aria-label="JSON Genie workspace">
         <HeroGraphic />
+        {import.meta.env.VITE_ENABLE_LOTTIE === 'true' && typeof window !== 'undefined' ? <LottieHero src="https://assets6.lottiefiles.com/packages/lf20_5ngs2ksb.json" /> : null}
         <InputPane
           text={text}
           onTextChange={setText}

@@ -23,6 +23,9 @@ const paths: Record<IconName, ReactNode> = {
   file: <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6M8 13h8M8 17h5" /></>,
 }
 
-export function Icon({ name, size = 16, strokeWidth = 1.8, ...props }: { name: IconName; size?: number; strokeWidth?: number } & SVGProps<SVGSVGElement>) {
-  return <svg {...props} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>
+export function Icon({ name, size = 16, strokeWidth = 1.8, className = '', ...props }: { name: IconName; size?: number; strokeWidth?: number; className?: string } & SVGProps<SVGSVGElement>) {
+  // Animate only a small set of decorative icons; CSS honors prefers-reduced-motion
+  const animated = ['sparkles', 'check', 'download', 'plus'] as const
+  const animClass = (animated as readonly string[]).includes(name) ? 'icon-animate' : ''
+  return <svg {...props} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={`${className} ${animClass}`}>{paths[name]}</svg>
 }
