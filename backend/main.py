@@ -101,3 +101,39 @@ async def extract(request: ExtractRequest) -> ExtractResponse:
         missing_count=counts["missing"],
         mismatch_count=counts["mismatch"],
     )
+
+
+class ApplyOverridesRequest(BaseModel):
+    schema_name: Literal["invoice", "job_posting", "email", "custom"]
+    overrides: dict[str, Any]
+    base_result: dict[str, Any] | None = None
+    custom_fields: list[FieldSpec] | None = None
+
+
+@app.post("/apply_overrides", response_model=ExtractResponse)
+async def apply_overrides(request: ApplyOverridesRequest) -> ExtractResponse:
+    try:
+        model, specs = get_schema(request.schema_name, request.custom_fields)
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
+    names = {spec.name for spec in specs}
+    base = request.base_result or {}
+    raw = {name: base.get(name) for name in names}
+    # apply only known fields from overrides
+    for k, v in request.overrides.items():
+        if k in raw:
+            raw[k] = v
+
+    result, statuses, confidences = normalize_model_response(raw, model, specs)
+
+    fields = [ResultField(**spec.model_dump(), value=result[spec.name], status=statuses[spec.name], confidence=confidences.get(spec.name)) for spec in specs]
+    counts = {status: list(statuses.values()).count(status) for status in ("validated", "missing", "mismatch")}
+    return ExtractResponse(
+        schema_name=request.schema_name,
+        result=result,
+        fields=fields,
+        matched_count=counts["validated"],
+        missing_count=counts["missing"],
+        mismatch_count=counts["mismatch"],
+    )

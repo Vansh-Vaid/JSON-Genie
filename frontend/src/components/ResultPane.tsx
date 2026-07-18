@@ -32,7 +32,7 @@ type ResultPaneProps = {
   onSelectHistory: (entry: HistoryEntry) => void
 }
 
-export function ResultPane({ result, isLoading, phase, error, history, schemaName, customFields, isResolving, onSelectHistory }: ResultPaneProps) {
+export function ResultPane({ result, isLoading, phase, error, history, schemaName, customFields, isResolving, onSelectHistory, onApplyOverrides }: ResultPaneProps & { onApplyOverrides?: (schemaName: SchemaName, overrides: Record<string, unknown>, baseResult?: Record<string, unknown>) => Promise<void> }) {
   const [raw, setRaw] = useState(false)
   const [copied, setCopied] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
@@ -70,6 +70,12 @@ export function ResultPane({ result, isLoading, phase, error, history, schemaNam
     setNotice('Downloaded JSON file')
   }
 
+  const handleFieldChange = async (name: string, value: unknown) => {
+    if (!result) return
+    if (!onApplyOverrides) return
+    await onApplyOverrides(schemaName, { [name]: value }, result.result)
+  }
+
   return <section className={`result-pane ${isResolving ? 'is-resolving' : ''}`} aria-live="polite" aria-label="Resolved fields">
     <div className="pane-heading">
       <span className="pane-index">02</span>
@@ -87,7 +93,7 @@ export function ResultPane({ result, isLoading, phase, error, history, schemaNam
         <div className="result-summary"><span className={result.missing_count || result.mismatch_count ? 'summary-number summary-number-flag' : 'summary-number'}>{String(result.matched_count).padStart(2, '0')}<i>/</i>{String(result.fields.length).padStart(2, '0')}</span><p><strong>fields matched</strong><span>{result.missing_count || result.mismatch_count ? `${result.missing_count + result.mismatch_count} needs review` : 'all fields validated'}</span></p></div>
         <div className="result-actions"><button className="view-toggle" type="button" aria-pressed={raw} onClick={() => setRaw(!raw)}><Icon name={raw ? 'list' : 'code'} size={14} /> {raw ? 'Field view' : 'Raw JSON'}</button><button className="icon-button" type="button" onClick={copy}><Icon name={copied ? 'check' : 'copy'} size={14} /> {copied ? 'Copied' : 'Copy'}</button><button className="icon-button" type="button" onClick={download}><Icon name="download" size={14} /> Download</button></div>
       </div>
-      {raw ? <pre className="raw-json">{JSON.stringify(result.result, null, 2)}</pre> : <div className="field-list">{result.fields.map(field => <FieldRow key={field.name} field={field} />)}</div>}
+      {raw ? <pre className="raw-json">{JSON.stringify(result.result, null, 2)}</pre> : <div className="field-list">{result.fields.map(field => <FieldRow key={field.name} field={field} onChange={handleFieldChange} />)}</div>}
     </>}
     {history.length > 0 && <nav className="history" aria-label="Recent runs"><h2 className="section-label">Recent runs</h2><div className="history-list">{history.map(entry => <button key={entry.id} type="button" onClick={() => onSelectHistory(entry)}><span>{entry.schemaName.replace('_', ' ')}</span><time>{entry.createdAt}</time></button>)}</div></nav>}
     {notice && <div className="toast" role="status"><Icon name="check" size={15} /> {notice}</div>}

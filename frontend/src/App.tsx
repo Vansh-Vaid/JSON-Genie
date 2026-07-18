@@ -118,6 +118,26 @@ export default function App() {
     setError(null)
   }
 
+  const applyOverrides = async (schemaNameParam: SchemaName, overrides: Record<string, unknown>, baseResult?: Record<string, unknown>) => {
+    setIsResolving(true)
+    try {
+      const response = await fetch(`${API_URL}/apply_overrides`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ schema_name: schemaNameParam, overrides, base_result: baseResult, custom_fields: schemaNameParam === 'custom' ? customFields : undefined }),
+      })
+      const payload: unknown = await response.json().catch(() => null)
+      if (!response.ok) throw new Error(errorDetail(payload))
+      setResult(payload as ExtractionResult)
+      setResolveCycle(current => current + 1)
+      setIsResolving(true)
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : String(caught))
+    } finally {
+      setIsResolving(false)
+    }
+  }
+
   return (
     <main className="app-shell">
       <header className="topbar">
