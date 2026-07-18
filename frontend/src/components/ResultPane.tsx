@@ -70,10 +70,40 @@ export function ResultPane({ result, isLoading, phase, error, history, schemaNam
     setNotice('Downloaded JSON file')
   }
 
-  const handleFieldChange = async (name: string, value: unknown) => {
+  const [revalidating, setRevalidating] = useState(false)
+  const [overrideError, setOverrideError] = useState<string | null>(null)
+  const overridesRef = useMemo(() => ({} as Record<string, unknown>), [])
+  const timerRef = useMemo(() => ({ id: 0 as number | undefined }), [])
+
+  const flushOverrides = async () => {
+    if (!onApplyOverrides) return
+    const keys = Object.keys(overridesRef)
+    if (!keys.length) return
+    const toSend = { ...overridesRef }
+    // clear buffer
+    for (const k of keys) delete overridesRef[k]
+    clearTimeout(timerRef.id)
+    setRevalidating(true)
+    setOverrideError(null)
+    try {
+      await onApplyOverrides(schemaName, toSend, result?.result)
+      setNotice('Applied edits and revalidated')
+    } catch (err) {
+      setOverrideError(err instanceof Error ? err.message : String(err))
+      setNotice('Failed to apply edits')
+    } finally {
+      setRevalidating(false)
+    }
+  }
+
+  const handleFieldChange = (name: string, value: unknown) => {
     if (!result) return
     if (!onApplyOverrides) return
-    await onApplyOverrides(schemaName, { [name]: value }, result.result)
+    overridesRef[name] = value
+    // debounce/batch: send 800ms after last edit
+    if (timerRef.id) clearTimeout(timerRef.id)
+    // @ts-ignore - window.setTimeout returns number in browsers
+    timerRef.id = window.setTimeout(flushOverrides, 800)
   }
 
   return <section className={`result-pane ${isResolving ? 'is-resolving' : ''}`} aria-live="polite" aria-label="Resolved fields">

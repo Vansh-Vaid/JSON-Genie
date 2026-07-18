@@ -15,11 +15,12 @@ function formatValue(field: ResultField) {
   return JSON.stringify(value)
 }
 
-export function FieldRow({ field, onChange }: { field: ResultField; onChange?: (name: string, value: unknown) => void }) {
+export function FieldRow({ field, onChange, disabled }: { field: ResultField; onChange?: (name: string, value: unknown) => void; disabled?: boolean }) {
   const [editing, setEditing] = useState(false)
   const [local, setLocal] = useState<string>(() => typeof field.value === 'string' ? field.value : (Array.isArray(field.value) ? (field.value as unknown[]).join(', ') : String(field.value)))
 
   const save = () => {
+    if (disabled) return
     let parsed: unknown = local
     if (field.type === 'number') {
       const n = Number(local.toString().replace(/[^0-9.eE+-]/g, ''))
@@ -40,10 +41,10 @@ export function FieldRow({ field, onChange }: { field: ResultField; onChange?: (
       </div>
       {editing ? (
         <div className="field-editor">
-          <input value={local} onChange={e => setLocal(e.target.value)} />
+          <input value={local} onChange={e => setLocal(e.target.value)} disabled={disabled} />
           <div className="field-editor-actions">
-            <button onClick={() => setEditing(false)} type="button">Cancel</button>
-            <button onClick={save} type="button">Save</button>
+            <button onClick={() => setEditing(false)} type="button" disabled={disabled}>Cancel</button>
+            <button onClick={save} type="button" disabled={disabled}>Save</button>
           </div>
         </div>
       ) : (
@@ -52,7 +53,7 @@ export function FieldRow({ field, onChange }: { field: ResultField; onChange?: (
       <div className="field-meta">
         <Stamp status={field.status} />
         {typeof field.confidence === 'number' && <span className="confidence">{Math.round(field.confidence * 100)}%</span>}
-        <button className="edit-button" type="button" onClick={() => setEditing(true)}>Edit</button>
+        <button className="edit-button" type="button" onClick={() => setEditing(true)} disabled={disabled}>Edit</button>
       </div>
     </article>
   )

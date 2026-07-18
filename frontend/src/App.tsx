@@ -27,7 +27,14 @@ export default function App() {
   const [schemaName, setSchemaName] = useState<SchemaName>('invoice')
   const [customFields, setCustomFields] = useState<CustomField[]>([])
   const [result, setResult] = useState<ExtractionResult | null>(null)
-  const [history, setHistory] = useState<HistoryEntry[]>([])
+  const [history, setHistory] = useState<HistoryEntry[]>(() => {
+    try {
+      const raw = window.localStorage.getItem('json-genie-history')
+      return raw ? JSON.parse(raw) as HistoryEntry[] : []
+    } catch {
+      return []
+    }
+  })
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isResolving, setIsResolving] = useState(false)
@@ -92,15 +99,19 @@ export default function App() {
       setResult(extraction)
       setResolveCycle(current => current + 1)
       setIsResolving(true)
-      setHistory(current => [
-        {
-          id: crypto.randomUUID(),
-          schemaName,
-          result: extraction,
-          createdAt: new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(new Date()),
-        },
-        ...current,
-      ].slice(0, 5))
+      setHistory(current => {
+        const next = [
+          {
+            id: crypto.randomUUID(),
+            schemaName,
+            result: extraction,
+            createdAt: new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(new Date()),
+          },
+          ...current,
+        ].slice(0, 5)
+        try { window.localStorage.setItem('json-genie-history', JSON.stringify(next)) } catch {}
+        return next
+      })
     } catch (caught) {
       setError(caught instanceof TypeError
         ? 'The extraction service could not be reached. Check the deployed API URL and allowed origin settings.'
@@ -128,11 +139,26 @@ export default function App() {
       })
       const payload: unknown = await response.json().catch(() => null)
       if (!response.ok) throw new Error(errorDetail(payload))
-      setResult(payload as ExtractionResult)
+      const extraction = payload as ExtractionResult
+      setResult(extraction)
       setResolveCycle(current => current + 1)
-      setIsResolving(true)
+      // persist into history as the latest run (keep shape and timestamp)
+      setHistory(current => {
+        const next = [
+          {
+            id: crypto.randomUUID(),
+            schemaName: schemaNameParam,
+            result: extraction,
+            createdAt: new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(new Date()),
+          },
+          ...current.filter(h => h.schemaName !== schemaNameParam),
+        ].slice(0, 5)
+        try { window.localStorage.setItem('json-genie-history', JSON.stringify(next)) } catch {}
+        return next
+      })
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : String(caught))
+      throw caught
     } finally {
       setIsResolving(false)
     }
@@ -183,6 +209,7 @@ export default function App() {
           customFields={customFields}
           isResolving={isResolving}
           onSelectHistory={selectHistory}
+          onApplyOverrides={applyOverrides}
         />
       </section>
       <footer className="app-footer"><span><Icon name="code" size={13} /> JSON Genie</span><span>Private, schema-first extraction in your browser session.</span><a href="https://github.com/Vansh-Vaid/JSON-Genie" target="_blank" rel="noreferrer">View source <Icon name="arrow-up-right" size={13} /></a></footer>
