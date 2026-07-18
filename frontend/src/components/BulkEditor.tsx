@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ExtractionResult, ResultField } from '../types'
 
 export function BulkEditor({ result, onClose, onApply }: { result: ExtractionResult; onClose: () => void; onApply: (overrides: Record<string, unknown>) => Promise<void> }) {
@@ -7,6 +7,47 @@ export function BulkEditor({ result, onClose, onApply }: { result: ExtractionRes
     for (const f of result.fields) map[f.name] = typeof f.value === 'string' ? f.value : (Array.isArray(f.value) ? f.value.join(', ') : String(f.value ?? ''))
     return map
   })
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const previouslyFocused = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    previouslyFocused.current = document.activeElement as HTMLElement | null
+    const firstInput = containerRef.current?.querySelector<HTMLInputElement>('input')
+    if (firstInput) firstInput.focus()
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        onClose()
+        return
+      }
+      if (e.key === 'Tab') {
+        // trap focus within dialog
+        const focusable = containerRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+        if (!focusable || focusable.length === 0) return
+        const nodes = Array.from(focusable)
+        const idx = nodes.indexOf(document.activeElement as HTMLElement)
+        if (e.shiftKey) {
+          if (idx === 0) {
+            nodes[nodes.length - 1].focus()
+            e.preventDefault()
+          }
+        } else {
+          if (idx === nodes.length - 1) {
+            nodes[0].focus()
+            e.preventDefault()
+          }
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      if (previouslyFocused.current) previouslyFocused.current.focus()
+    }
+  }, [onClose])
 
   const handleChange = (name: string, value: string) => setLocal(prev => ({ ...prev, [name]: value }))
   const apply = async () => {
@@ -29,7 +70,7 @@ export function BulkEditor({ result, onClose, onApply }: { result: ExtractionRes
 
   return (
     <div className="bulk-editor-backdrop" role="dialog" aria-modal="true">
-      <div className="bulk-editor">
+      <div className="bulk-editor" ref={containerRef} aria-label="Bulk editor dialog">
         <header className="bulk-editor-header"><h2>Bulk edit fields</h2><button onClick={onClose} aria-label="Close">✕</button></header>
         <div className="bulk-editor-body">
           {result.fields.map((f: ResultField) => (
